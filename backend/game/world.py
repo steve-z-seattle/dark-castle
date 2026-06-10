@@ -198,10 +198,13 @@ class GameWorld:
         return None
 
     def has_light_source(self) -> bool:
-        """Return whether the player carries a lit light source."""
+        """Return whether the player carries or is near a lit light source."""
         for item_id in self.inventory:
             item = self.items.get(item_id)
             if item and item.is_lit():
+                return True
+        for item in self.get_items_in_room(self.current_room):
+            if item.is_lit():
                 return True
         return False
 
